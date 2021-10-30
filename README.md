@@ -34,7 +34,7 @@ hasura migrate apply --envfile .env.production
 hasura metadata apply --envfile .env.production
 ```
 
-### スカッシュ
+### Squash
 開発中に何回かに分けてテーブルを作ったりするとマイグレーションファイルがその分だけ生成されます。不必要にマイグレーションファイルが別れている場合は見通しが悪くなるので以下のコマンドで1にまとめて下さい。
 
 
@@ -65,7 +65,7 @@ sequenceDiagram
       loop
         Feature1->>Feature1: マイグレーション
       end
-      Feature1->>Feature1: スカッシュ
+      Feature1->>Feature1: Squash
     end
     
 
@@ -75,13 +75,13 @@ sequenceDiagram
       loop
         Feature2->>Feature2: マイグレーション
       end
-      Feature2->>Feature2: スカッシュ
+      Feature2->>Feature2: Squash
     end
 
     Feature1->>Develop: PR & Merge
     Feature2->>Develop: PR & Merge
     
-    Develop->>Develop: スカッシュ
+    Develop->>Develop: Squash
     Develop->>Release: リリース作業用ブランチ作成
     Release->>Release: マイグレーション & 設定反映
     Release->>Master: マージ
