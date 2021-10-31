@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  HttpLink,
+} from "@apollo/client";
+import "./App.css";
+import env from "./env";
+import UserList from "./UserList";
+
+const createApolloClient = () => {
+  return new ApolloClient({
+    link: new HttpLink({
+      uri: `${env.hasuraEndpoint}/v1/graphql`,
+      headers: {
+        "content-type": "application/json",
+        "x-hasura-admin-secret": env.hasuraSecret,
+      },
+    }),
+    cache: new InMemoryCache(),
+  });
+};
 
 function App() {
+  const [client, setClient] = useState(createApolloClient());
+  console.debug({ env });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <div className="App">
+        <UserList />
+      </div>
+    </ApolloProvider>
   );
 }
 
