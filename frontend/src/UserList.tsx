@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 import React from "react";
 
 const GET_USERS = gql`
-  query getUsersQuery {
+  query getUsers {
     users {
       email
       id
